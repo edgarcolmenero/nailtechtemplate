@@ -29,3 +29,23 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   window.addEventListener('scroll', revealOnScroll);
   window.addEventListener('load', revealOnScroll);
   
+  // ---- Square iframe fallback (optional) ----
+(function () {
+    const embed = document.querySelector('.booking-embed');
+    if (!embed) return;
+  
+    const iframe = embed.querySelector('iframe');
+    const fallbackBtn = embed.querySelector('.iframe-fallback');
+  
+    // If the iframe hasn't fired 'load' within 6s, show the fallback button
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      if (fallbackBtn) fallbackBtn.style.display = 'inline-block';
+    }, 6000);
+  
+    iframe.addEventListener('load', () => {
+      if (!timedOut) clearTimeout(timer);
+    });
+  })();
+  
